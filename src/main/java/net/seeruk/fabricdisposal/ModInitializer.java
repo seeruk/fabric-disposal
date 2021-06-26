@@ -49,7 +49,7 @@ public class ModInitializer implements net.fabricmc.api.ModInitializer {
 class DisposalScreenHandlerFactory implements ScreenHandlerFactory, NamedScreenHandlerFactory {
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return GenericContainerScreenHandler.createGeneric9x3(syncId, player.inventory, new SimpleInventory(27));
+        return GenericContainerScreenHandler.createGeneric9x3(syncId, player.getInventory(), new SimpleInventory(27));
     }
 
     @Override
