@@ -1,6 +1,6 @@
 package net.seeruk.fabricdisposal;
 
-import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.SimpleInventory;
@@ -11,7 +11,6 @@ import net.minecraft.screen.ScreenHandlerFactory;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 
 /**
@@ -29,14 +28,14 @@ public class ModInitializer implements net.fabricmc.api.ModInitializer {
     public void onInitialize() {
         System.out.println("Disposal initialised");
 
-        CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, env) -> {
             dispatcher.register(CommandManager.literal("disposal").executes(context -> {
                 ServerCommandSource source = context.getSource();
 
                 if (source.getPlayer() != null) {
                     ServerPlayerEntity player = source.getPlayer();
 
-                    source.sendFeedback(new LiteralText("Opening disposal..."), false);
+                    source.sendFeedback(Text.literal("Opening disposal..."), false);
                     player.openHandledScreen(new DisposalScreenHandlerFactory());
                 }
 
@@ -54,6 +53,6 @@ class DisposalScreenHandlerFactory implements ScreenHandlerFactory, NamedScreenH
 
     @Override
     public Text getDisplayName() {
-        return new LiteralText("Disposal");
+        return Text.literal("Disposal");
     }
 }
